@@ -5,6 +5,7 @@ ENV MIX_ENV=prod
 COPY lib ./lib
 COPY mix.exs .
 COPY mix.lock .
+COPY index.html .
 
 RUN mix local.rebar --force \
     && mix local.hex --force \

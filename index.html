@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>bolik</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fff1f4;
+        }
+
+        * {
+            font-family: 'Inter', sans-serif;
+            color: #913b69;
+        }
+
+        main {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-direction: column;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        form {
+            width: 20rem;
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+            flex-direction: column;
+        }
+
+        img {
+            margin: 0 auto;
+            max-width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div>
+            <h1>bolik</h1>
+            <a href="https://github.com/fogo-sh/bolik">
+                github.com/fogo-sh/bolik
+            </a>
+        </div>
+        <form id="form">
+            <input type="file" name="image" />
+            <textarea name="args">[{"liquid-rescale": "50%x50%"}]</textarea>
+            <button>submit</button>
+        </form>
+        <img id="output" />
+    </main>
+
+
+    <script type="module">
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+
+            fetch('/', {
+                method: 'post',
+                body: formData,
+            }).then(async (response) => {
+                const imageBlob = await response.blob()
+                const reader = new FileReader();
+                reader.readAsDataURL(imageBlob);
+                reader.onloadend = () => {
+                    const base64data = reader.result;
+                    output.src = base64data;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

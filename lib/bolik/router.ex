@@ -2,6 +2,8 @@ defmodule Bolik.Router do
   use Plug.Router
   use Plug.ErrorHandler
 
+  @html "index.html" |> File.read!()
+
   plug(Plug.Logger)
   plug(Bolik.Cors)
   plug(:match)
@@ -12,6 +14,10 @@ defmodule Bolik.Router do
   )
 
   plug(:dispatch)
+
+  get "/" do
+    conn |> send_resp(200, @html)
+  end
 
   post "/" do
     %{"image" => %{path: path, content_type: content_type}, "args" => raw_args} = conn.body_params
