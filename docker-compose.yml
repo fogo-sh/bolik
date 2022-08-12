@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  bolik:
+    ports:
+      - "127.0.0.1:4001:4001"
+    build: .
